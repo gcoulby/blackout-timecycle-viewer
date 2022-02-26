@@ -1,4 +1,3 @@
--- local QBCore = exports['qb-core']:GetCoreObject()
 local isInMenu = false
 local sleep
 
@@ -42,12 +41,37 @@ local menu_button3 = menu:AddButton({
   description = 'Remove timecycle modifiers'
 })
 
+
 local menu_button5 = menu:AddButton({
+  icon = '🚪',
+  label = 'Unlock Police Door',
+  value = nil,
+  description = 'Unlock Police Station Door'
+})
+
+local halloweenOn = menu:AddButton({
+  icon = '🎃✔',
+  label = 'Halloween Weather On',
+  value = nil,
+  description = 'Amplified the effects the effects of Timecycles'
+})
+
+local halloweenOff = menu:AddButton({
+  icon = '🎃❌',
+  label = 'Halloween Weather Off',
+  value = nil,
+  description = 'Amplified the effects the effects of Timecycles'
+})
+
+
+local closeButton = menu:AddButton({
   icon = '❌',
   label = 'Close Menu',
   value = nil,
   description = 'Closes the menu'
 })
+
+
 
 local timeCycleButtons = {}
 
@@ -61,12 +85,9 @@ for i = 1, Config.TimeCyclesLength + 1 do
   })
 
   timeCycleButtons[i]:On("select", function()
-    
     SetTimecycleModifier(Config.TimeCycles[i])	
   end)
 end
-
-
 
 menu_button1:On("select", function()
   multiplier += 0.1
@@ -85,14 +106,30 @@ end)
 -- Clear
 menu_button3:On("select", function()
   ClearTimecycleModifier()
-  ClearWeatherTypePersist()
+  ClearWeather()
+end)
+
+
+menu_button5:On("select", function()
+  TriggerServerEvent('qb-doorlock:server:updateState', key, doorId.locked)
+end)
+
+halloweenOn:On("select", function()
+  SetWeatherTypePersist("HALLOWEEN")
+  SetWeatherTypeNowPersist("HALLOWEEN")
+  SetWeatherTypeOvertimePersist("HALLOWEEN", 1000000)
+  SetWeatherTypeNow("HALLOWEEN")
+  SetOverrideWeather("HALLOWEEN")
+end)
+
+halloweenOff:On("select", function()
+  ClearWeather()
 end)
 
 --close
-menu_button5:On("select", function()
+closeButton:On("select", function()
   MenuV:CloseMenu(menu)
 end)
-
 
 
 -- MAIN THREAD
@@ -106,3 +143,12 @@ CreateThread(function()
       Wait(sleep)
   end
 end)
+
+
+function ClearWeather()
+  SetWeatherTypePersist("CLEAR")
+  SetWeatherTypeNowPersist("CLEAR")
+  SetWeatherTypeOvertimePersist("CLEAR", 1000000)
+  SetWeatherTypeNow("CLEAR")
+  SetOverrideWeather("CLEAR")
+end
