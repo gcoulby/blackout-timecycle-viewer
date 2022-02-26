@@ -42,13 +42,6 @@ local menu_button3 = menu:AddButton({
 })
 
 
-local menu_button5 = menu:AddButton({
-  icon = '🚪',
-  label = 'Unlock Police Door',
-  value = nil,
-  description = 'Unlock Police Station Door'
-})
-
 local halloweenOn = menu:AddButton({
   icon = '🎃✔',
   label = 'Halloween Weather On',
@@ -107,11 +100,6 @@ end)
 menu_button3:On("select", function()
   ClearTimecycleModifier()
   ClearWeather()
-end)
-
-
-menu_button5:On("select", function()
-  TriggerServerEvent('qb-doorlock:server:updateState', key, doorId.locked)
 end)
 
 halloweenOn:On("select", function()
