@@ -86,14 +86,14 @@ menu_button1:On("select", function()
   multiplier += 0.1
   if multiplier > 3 then multiplier = 3 end
   SetTimecycleModifierStrength(multiplier)
-  QBCore.Functions.Notify("Timecyle Strength: " .. multiplier, 'success')
+  print("Timecyle Strength: " .. multiplier)
 end)
 
 menu_button2:On("select", function()
   multiplier -= 0.1
   if multiplier < 0 then multiplier = 0 end
   SetTimecycleModifierStrength(multiplier)
-  QBCore.Functions.Notify("Timecyle Strength: " .. multiplier, 'success')
+  print("Timecyle Strength: " .. multiplier)
 end)
 
 -- Clear
